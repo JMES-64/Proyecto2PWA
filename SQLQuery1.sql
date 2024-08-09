@@ -143,3 +143,23 @@ REFERENCES Empleado (IDE)
 GO
 ALTER TABLE Reunion CHECK CONSTRAINT [FK_Reunion_Empleado]
 GO
+
+--Procedimientos almacenados
+CREATE PROCEDURE EditaEmp(
+@IDE int,
+@Nombre varchar(max),
+@Direccion varchar(max),
+@Correo varchar(max),
+@Telefono int,
+@Emergencia int
+)
+AS BEGIN
+UPDATE Empleado SET
+Nombre= @Nombre,
+Direccion= @Direccion,
+Correo= @Correo,
+Telefono= @Telefono,
+Emergencia= @Emergencia
+WHERE IDE=@IDE
+END
+GO
