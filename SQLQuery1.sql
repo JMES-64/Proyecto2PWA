@@ -145,6 +145,7 @@ ALTER TABLE Reunion CHECK CONSTRAINT [FK_Reunion_Empleado]
 GO
 
 --Procedimientos almacenados
+--Para editar Empleados
 CREATE PROCEDURE EditaEmp(
 @IDE int,
 @Nombre varchar(max),
@@ -160,6 +161,16 @@ Direccion= @Direccion,
 Correo= @Correo,
 Telefono= @Telefono,
 Emergencia= @Emergencia
+WHERE IDE=@IDE
+END
+GO
+
+--Ver roles del empleado
+CREATE PROCEDURE ListarR(
+@IDE int
+)
+AS BEGIN
+SELECT * FROM Roles
 WHERE IDE=@IDE
 END
 GO
