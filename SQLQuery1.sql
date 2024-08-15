@@ -30,7 +30,7 @@ GO
 CREATE TABLE Roles(
 IDR int IDENTITY(1,1) NOT NULL,
 Rol varchar(max) NOT NULL,
-Permiso varchar(max) NOT NULL,
+Permisos varchar(max) NOT NULL,
 IDE int NOT NULL,
 CONSTRAINT [PK_IDR]PRIMARY KEY CLUSTERED
 (
@@ -56,7 +56,8 @@ GO
 CREATE TABLE Turno(
 IDT int IDENTITY (1,1) NOT NULL,
 Turn varchar(max) NOT NULL,
-Horario datetime NOT NULL,
+DiaInicio varchar (max)NOT NULL,
+DiaFinal varchar (max) NOT NULL,
 Libres varchar(max) NOT NULL,
 IDE int NOT NULL
 CONSTRAINT [PK_IDT]PRIMARY KEY CLUSTERED
@@ -72,6 +73,7 @@ IDN int IDENTITY (1,1) NOT NULL,
 Salario float NOT NULL,
 Deducciones float NOT NULL,
 Bonificaciones float NOT NULL,
+Total float NOT NULL,
 IDE int NOT NULL
 CONSTRAINT [PK_IDN]PRIMARY KEY CLUSTERED
 (
@@ -171,6 +173,77 @@ CREATE PROCEDURE ListarR(
 )
 AS BEGIN
 SELECT * FROM Roles
+WHERE IDE=@IDE
+END
+GO
+
+--Ver Historial del empleado
+CREATE PROCEDURE ListarH(
+@IDE int
+)
+AS BEGIN
+SELECT * FROM Historial
+WHERE IDE=@IDE
+END
+GO
+
+--Ver Turnos del empleado
+CREATE PROCEDURE ListarT(
+@IDE int
+)
+AS BEGIN
+SELECT * FROM Turno
+WHERE IDE=@IDE
+END
+GO
+
+--Ver Desempeño del empleado
+CREATE PROCEDURE ListarD(
+@IDE int
+)
+AS BEGIN
+SELECT * FROM Desempeno
+WHERE IDE=@IDE
+END
+GO
+
+--Ver Nominas del empleado
+CREATE PROCEDURE ListarN(
+@IDE int
+)
+AS BEGIN
+SELECT * FROM Nomina
+WHERE IDE=@IDE
+END
+GO
+
+--Crea la Nomina
+CREATE PROCEDURE CreaN(
+@Salario float,
+@Deducciones float,
+@Bonificaciones float,
+@Total float,
+@IDE int
+)
+AS
+BEGIN
+INSERT INTO Nomina(Salario,Deducciones,Bonificaciones,Total,IDE)
+VALUES(
+@Salario,
+@Deducciones,
+@Bonificaciones,
+@Total,
+@IDE
+)
+END
+GO
+
+--Ver Reuniones del empleado
+CREATE PROCEDURE ListarRe(
+@IDE int
+)
+AS BEGIN
+SELECT * FROM Reunion
 WHERE IDE=@IDE
 END
 GO
