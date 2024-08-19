@@ -177,6 +177,22 @@ WHERE IDE=@IDE
 END
 GO
 
+--Para editar Roles
+CREATE PROCEDURE EditaRol(
+@IDR int,
+@Rol varchar(max),
+@Permisos varchar(max),
+@IDE int
+)
+AS BEGIN
+UPDATE Roles SET
+Rol= @Rol,
+Permisos= @Permisos,
+IDE= @IDE
+WHERE IDR=@IDR
+END
+GO
+
 --Ver Historial del empleado
 CREATE PROCEDURE ListarH(
 @IDE int
