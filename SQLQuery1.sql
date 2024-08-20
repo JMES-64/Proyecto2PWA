@@ -177,22 +177,6 @@ WHERE IDE=@IDE
 END
 GO
 
---Para editar Roles
-CREATE PROCEDURE EditaRol(
-@IDR int,
-@Rol varchar(max),
-@Permisos varchar(max),
-@IDE int
-)
-AS BEGIN
-UPDATE Roles SET
-Rol= @Rol,
-Permisos= @Permisos,
-IDE= @IDE
-WHERE IDR=@IDR
-END
-GO
-
 --Ver Historial del empleado
 CREATE PROCEDURE ListarH(
 @IDE int
@@ -233,6 +217,16 @@ WHERE IDE=@IDE
 END
 GO
 
+--Ver Reuniones del empleado
+CREATE PROCEDURE ListarRe(
+@IDE int
+)
+AS BEGIN
+SELECT * FROM Reunion
+WHERE IDE=@IDE
+END
+GO
+
 --Crea la Nomina
 CREATE PROCEDURE CreaN(
 @Salario float,
@@ -254,12 +248,95 @@ VALUES(
 END
 GO
 
---Ver Reuniones del empleado
-CREATE PROCEDURE ListarRe(
+-- Funciones de edición
+
+--Para editar Roles
+CREATE PROCEDURE EditaRol(
+@IDR int,
+@Rol varchar(max),
+@Permisos varchar(max),
 @IDE int
 )
 AS BEGIN
-SELECT * FROM Reunion
+UPDATE Roles SET
+Rol= @Rol,
+Permisos= @Permisos,
+IDE= @IDE
+WHERE IDR=@IDR
+END
+GO
+
+--Para editar desempeño
+CREATE PROCEDURE EditaDes(
+@IDD int,
+@Objetivo varchar(max),
+@Seguimiento varchar(max),
+@Retroalimentacion varchar(max),
+@IDE int
+)
+AS BEGIN
+UPDATE	Desempeno SET
+Objetivo= @Objetivo,
+Seguimiento= @Seguimiento,
+Retroalimentacion= @Retroalimentacion,
+IDE= @IDE
+WHERE IDD=@IDD
+END
+GO
+
+--Para editar historial
+CREATE PROCEDURE EditaHis(
+@IDH int,
+@Info varchar(max),
+@Empleo varchar(max),
+@IDE int
+)
+AS BEGIN
+UPDATE Historial SET
+Info= @Info,
+Empleo= @Empleo,
+IDE= @IDE
+WHERE IDH=@IDH
+END
+GO
+
+--Editar el turno
+CREATE PROCEDURE EditaT(
+@IDT int,
+@Turn varchar(max),
+@DiaInicio varchar(max),
+@DiaFinal varchar(max),
+@Libres varchar (max),
+@IDE int
+)
+AS BEGIN
+UPDATE Turno SET
+Turn= @Turn,
+DiaInicio= @DiaInicio,
+DiaFinal=@DiaFinal,
+Libres= @Libres,
+IDE= @IDE
+WHERE IDT=@IDT
+END
+GO
+--Borrar el empleado y toda la información relacionada
+CREATE PROCEDURE BorraEmp(
+@IDE int
+)
+AS BEGIN
+DELETE FROM Desempeno
+WHERE IDE=@IDE
+DELETE FROM Historial
+WHERE IDE=@IDE
+DELETE FROM Nomina
+WHERE IDE=@IDE
+DELETE FROM Turno
+WHERE IDE=@IDE
+DELETE FROM Reunion
+WHERE IDE=@IDE
+DELETE FROM Roles
+WHERE IDE=@IDE
+DELETE FROM Empleado
 WHERE IDE=@IDE
 END
 GO
